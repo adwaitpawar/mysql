@@ -14,7 +14,7 @@ services:
       - mynetwork
     volumes:
       - mysql_data:/var/lib/mysql
-    command: ["./wait-for-it.sh", "mysql:3306", "--", "docker-entrypoint.sh", "--default-authentication-plugin=mysql_native_password"]
+    command: ["/var/lib/jenkins/workspace/mysql_dotnet_angular/ThirdRepo/wait-for-it.sh", "mysql:3306", "--", "docker-entrypoint.sh", "--default-authentication-plugin=mysql_native_password"]
 
   webapi:
     image: my-first-image
