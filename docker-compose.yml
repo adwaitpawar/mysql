@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:latest
+    ports:
+      - "8002:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=Mypass123!
+      - MYSQL_DATABASE=EmployeeDB
+      - MYSQL_USER=adwait
+      - MYSQL_PASSWORD=Mypass123!
+    networks:
+      - mynetwork
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  webapi:
+    image: your-webapi-image-name:latest  # Replace 'your-webapi-image-name' with your actual image name
+    ports:
+      - "50306:80"
+    networks:
+      - mynetwork
+    depends_on:
+      - mysql
+
+  angularapp:
+    image: your-angularapp-image-name:latest  # Replace 'your-angularapp-image-name' with your actual image name
+    ports:
+      - "4201:4200"
+    networks:
+      - mynetwork
+    depends_on:
+      - webapi
+
+networks:
+  mynetwork:
+    driver: bridge
+
+volumes:
+  mysql_data:
