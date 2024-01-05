@@ -14,7 +14,11 @@ services:
       - mynetwork
     volumes:
       - mysql_data:/var/lib/mysql
-    command: ["/var/lib/jenkins/workspace/mysql_dotnet_angular/ThirdRepo/wait-for-it.sh", "mysql:3306", "--", "docker-entrypoint.sh", "--default-authentication-plugin=mysql_native_password"]
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "adwait", "-pMypass123!"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
 
   webapi:
     image: my-first-image
@@ -24,7 +28,6 @@ services:
       - mynetwork
     depends_on:
       - mysql
-    command: ["/var/lib/jenkins/workspace/mysql_dotnet_angular/ThirdRepo/wait-for-it.sh", "mysql:3306", "--", "your-webapi-start-command"]
 
   angularapp:
     image: my-second-image
@@ -34,7 +37,6 @@ services:
       - mynetwork
     depends_on:
       - webapi
-    command: ["/var/lib/jenkins/workspace/mysql_dotnet_angular/ThirdRepo/wait-for-it.sh", "webapi:80", "--", "your-angularapp-start-command"]
 
 networks:
   mynetwork:
