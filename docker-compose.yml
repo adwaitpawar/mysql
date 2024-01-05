@@ -16,7 +16,7 @@ services:
       - mysql_data:/var/lib/mysql
 
   webapi:
-    image: your-webapi-image-name:latest  # Replace 'your-webapi-image-name' with your actual image name
+    image: my-first-image  # Replace 'your-webapi-image-name' with your actual image name
     ports:
       - "50306:80"
     networks:
@@ -25,7 +25,7 @@ services:
       - mysql
 
   angularapp:
-    image: your-angularapp-image-name:latest  # Replace 'your-angularapp-image-name' with your actual image name
+    image: my-second-image  # Replace 'your-angularapp-image-name' with your actual image name
     ports:
       - "4201:4200"
     networks:
