@@ -14,24 +14,27 @@ services:
       - mynetwork
     volumes:
       - mysql_data:/var/lib/mysql
+    command: ["./wait-for-it.sh", "mysql:3306", "--", "docker-entrypoint.sh", "--default-authentication-plugin=mysql_native_password"]
 
   webapi:
-    image: my-first-image  # Replace 'your-webapi-image-name' with your actual image name
+    image: my-first-image
     ports:
       - "50306:80"
     networks:
       - mynetwork
     depends_on:
       - mysql
+    command: ["./wait-for-it.sh", "mysql:3306", "--", "your-webapi-start-command"]
 
   angularapp:
-    image: my-second-image  # Replace 'your-angularapp-image-name' with your actual image name
+    image: my-second-image
     ports:
       - "4201:4200"
     networks:
       - mynetwork
     depends_on:
       - webapi
+    command: ["./wait-for-it.sh", "webapi:80", "--", "your-angularapp-start-command"]
 
 networks:
   mynetwork:
