@@ -28,7 +28,9 @@ services:
       - mynetwork
     depends_on:
       - mysql
-
+    environment:
+      - Database__Provider=MySql
+      - Database__ConnectionString=server=database;database=EmployeeDB;uid=root;pwd=Mypass123!
   angularapp:
     image: my-second-image
     ports:
